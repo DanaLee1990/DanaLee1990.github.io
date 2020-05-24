@@ -152,6 +152,116 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-CentOS搭建GitBook" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/05/24/CentOS%E6%90%AD%E5%BB%BAGitBook/">CentOS搭建GitBook</a>
+    </h1>
+  
+
+        
+        <a href="/2020/05/24/CentOS%E6%90%AD%E5%BB%BAGitBook/" class="archive-article-date">
+  	<time datetime="2020-05-24T10:41:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-24</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="CentOS7搭建gitbook"><a href="#CentOS7搭建gitbook" class="headerlink" title="CentOS7搭建gitbook"></a>CentOS7搭建gitbook</h2><blockquote>
+<p>参考链接：<a href="https://www.jianshu.com/p/a78e3dda4d87" target="_blank" rel="noopener">简书~羽杰</a></p>
+<p>简介：GitBook是一款基于Node.js开发的开源的工具，可以通过命令行的方式创建电子书项目，再使用MarkDown编写电子书内容，可以生成PDF、ePub、mobi格式的电子书或生成一个静态站点。</p>
+</blockquote>
+<h3 id="1-安装依赖包"><a href="#1-安装依赖包" class="headerlink" title="1.安装依赖包"></a>1.安装依赖包</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install gcc gcc-c++ -y</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="2-安装Node-js"><a href="#2-安装Node-js" class="headerlink" title="2.安装Node.js"></a>2.安装Node.js</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">wget https://nodejs.org/dist/v5.4.1/node-v5.4.1.tar.gz</span><br><span class="line">tar zxvf node-v5.4.1.tar.gz</span><br><span class="line">cd node-v5.4.1</span><br><span class="line">./configure</span><br><span class="line">sudo make   ## 编译时间较长，耐心等待</span><br><span class="line">sudo make install</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 查看Node.js是否安装成功</span></span></span><br><span class="line">node --version   ## 或者 node -v</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="3-安装GitBook"><a href="#3-安装GitBook" class="headerlink" title="3.安装GitBook"></a>3.安装GitBook</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 安装依赖模块</span></span></span><br><span class="line">npm install -g config-chain</span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 安装gitbook-cli</span></span></span><br><span class="line">npm install gitbook-cli -g</span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># gitbook初始化</span></span></span><br><span class="line">gitbook --version  # 或者 gitbook -V</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="4-GitBook常用指令"><a href="#4-GitBook常用指令" class="headerlink" title="4.GitBook常用指令"></a>4.GitBook常用指令</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 启动服务，可以在web端进行预览，访问地址：http://localhost:4000</span></span></span><br><span class="line">gitbook serve </span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 生成PDF文档</span></span></span><br><span class="line">gitbook pdf ./ ./book.pdf</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 生成html文档</span></span></span><br><span class="line">gitbook build</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 生成mobi电子书</span></span></span><br><span class="line">gitbook mobi ./ ./book.mobi</span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">## 构建 mobi 错误：InstallRequiredError: "ebook-convert" is not installed。解决办法：Binary install 安装 calibre-ebook</span></span></span><br><span class="line">sudo -v &amp;&amp; wget -nv -O- https://download.calibre-ebook.com/linux-installer.py | sudo python -c "import sys; main=lambda:sys.stderr.write('Download failed\n'); exec(sys.stdin.read()); main()"</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="5-创建电子书项目"><a href="#5-创建电子书项目" class="headerlink" title="5.创建电子书项目"></a>5.创建电子书项目</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mkdir book</span><br><span class="line">cd book</span><br><span class="line">gitbook init</span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 创建好的项目目录中包含以下文件</span></span></span><br><span class="line">ovirt-branding.md  README.md  SUMMARY.md</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="6-使用异常"><a href="#6-使用异常" class="headerlink" title="6.使用异常"></a>6.使用异常</h3><ol>
+<li><p>执行指令 gitbook pdf 异常，异常信息如下：</p>
+<blockquote>
+<p>异常原因：最后发现是 node 版本的问题，当前本机版本为 v5.4.1， 而Gitbook 只支持 6.x.x ，我试过将 Gitbook升级最新版，包括pre版也是不行的。</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost user_guide]# gitbook pdf</span><br><span class="line">Error loading version latest: SyntaxError: Unexpected token &#123;</span><br><span class="line">    at exports.runInThisContext (vm.js:53:16)</span><br><span class="line">    at Module._compile (module.js:373:25)</span><br><span class="line">    at Object.Module._extensions..js (module.js:404:10)</span><br><span class="line">    at Module.load (module.js:343:32)</span><br><span class="line">    at Function.Module._load (module.js:300:12)</span><br><span class="line">    at Module.require (module.js:353:17)</span><br><span class="line">    at require (internal/module.js:12:17)</span><br><span class="line">    at Object.&lt;anonymous&gt; (/root/.gitbook/versions/3.2.3/node_modules/read-installed/node_modules/read-package-json/read-json.js:14:27)</span><br><span class="line">    at Module._compile (module.js:397:26)</span><br><span class="line">    at Object.Module._extensions..js (module.js:404:10)</span><br><span class="line"></span><br><span class="line">TypeError: Cannot read property 'commands' of null</span><br></pre></td></tr></table></figure>
+
+<p>解决办法，切换node版本：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 安装n工具，这个工具是专门用来管理node.js版本的</span></span></span><br><span class="line">npm install n -g</span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 安装并切换至版本6</span></span></span><br><span class="line">n 6</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>需要的依赖未安装，异常详情如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">InstallRequiredError: "ebook-convert" is not installed.</span><br><span class="line">Install it from Calibre: https://calibre-ebook.com</span><br></pre></td></tr></table></figure>
+
+<p>解决办法，<strong>Binary install</strong> 安装 <strong>calibre-ebook</strong>：</p>
+<p><a href="https://blog.csdn.net/weixin_44221035/article/details/103935537" target="_blank" rel="noopener">libstdc++.so.6.0.26 分享人</a> </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 如下是一行命令，安装比较慢，耐心等待</span></span><br><span class="line">sudo -v &amp;&amp; wget -nv -O- https://download.calibre-ebook.com/linux-installer.sh | sudo sh /dev/stdin</span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 安装异常，详情如下</span></span></span><br><span class="line">RuntimeError: Failed to load icu with error: /lib64/libstdc++.so.6: version `CXXABI_1.3.8' not found (required by /opt/calibre/lib/libicui18n.so.64)</span><br><span class="line">Run "calibre" to start calibre</span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 原因：gcc动态版本库太老</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 解决办法：</span></span></span><br><span class="line">1. 下载 libstdc++.so.6.0.26，下载地址：https://www.lanzous.com/i8lnene，</span><br><span class="line">2. cp libstdc++.so.6.0.26 /usr/lib64/</span><br><span class="line">3. rm -rf libstdc++.so.6</span><br><span class="line">4. ln -s libstdc++.so.6.0.26 libstdc++.so.6</span><br><span class="line">5. strings /usr/lib64/libstdc++.so.6|grep CXXABI  # 查验CXXABI_1.3.8是否已存在</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>root用户不支持</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 异常信息</span></span></span><br><span class="line">ERROR:zygote_host_impl_linux.cc(89)] Running as root without --no-sandbox is not supported</span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 解决办法</span></span></span><br><span class="line">使用普通用户操作</span><br><span class="line">su admin</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/05/24/CentOS%E6%90%AD%E5%BB%BAGitBook/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-This-is-a-test" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
